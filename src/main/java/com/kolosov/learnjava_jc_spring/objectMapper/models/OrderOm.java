@@ -25,7 +25,7 @@ public class OrderOm extends BaseEntity<Long> {
     @JsonIgnoreProperties("orders")
     private CustomerOm customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("order")
     private List<OrderProductOm> orderProducts;
 
@@ -44,7 +44,15 @@ public class OrderOm extends BaseEntity<Long> {
 
     public void setOrderProducts(List<OrderProductOm> orderProducts) {
         this.orderProducts = orderProducts;
-        this.totalPrice = this.orderProducts.stream()
+        if (orderProducts == null) {
+            this.totalPrice = 0.0;
+        } else {
+            this.totalPrice = calculateTotalPrice();
+        }
+    }
+
+    public Double calculateTotalPrice() {
+        return this.orderProducts.stream()
                 .map((product) -> product.getPrice() * product.getCount())
                 .reduce(Double::sum)
                 .orElse(null);

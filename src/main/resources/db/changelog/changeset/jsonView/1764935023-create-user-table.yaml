@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Alexandr Kolosov
       changes:
         - createTable:
-            tableName: user
+            tableName: json_view_user
             columns:
               - column:
                   name: id

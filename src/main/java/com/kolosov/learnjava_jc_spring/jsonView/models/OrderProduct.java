@@ -5,12 +5,16 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.kolosov.learnjava_jc_spring.common.BaseEntity;
 import com.kolosov.learnjava_jc_spring.common.views.View;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "order_product")
+@Table(name = "json_view_order_product")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,12 +27,15 @@ public class OrderProduct extends BaseEntity<Long> {
     private Order order;
 
     @Column(name = "product_name")
+    @NotBlank
     private String productName;
 
     @Column(name = "price", columnDefinition = "NUMERIC")
+    @DecimalMin("0.0")
     private Double price;
 
     @Column(name = "count")
+    @Min(1)
     private Integer count;
 
     public OrderProduct(Long id, String productName, Double price, Integer count) {

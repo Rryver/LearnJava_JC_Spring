@@ -47,4 +47,8 @@ public abstract class CrudService<ENTITY, ID> {
     public void deleteById(ID id) {
         jpaRepository.deleteById(id);
     }
+
+    public boolean existById(ID id) {
+        return jpaRepository.existsById(id);
+    }
 }

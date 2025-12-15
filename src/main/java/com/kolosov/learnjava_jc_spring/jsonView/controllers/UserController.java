@@ -3,9 +3,9 @@ package com.kolosov.learnjava_jc_spring.jsonView.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.kolosov.learnjava_jc_spring.common.AbstractRestController;
 import com.kolosov.learnjava_jc_spring.common.errors.exceptions.ResourceNotFoundException;
+import com.kolosov.learnjava_jc_spring.common.views.View;
 import com.kolosov.learnjava_jc_spring.jsonView.models.User;
 import com.kolosov.learnjava_jc_spring.jsonView.services.UserService;
-import com.kolosov.learnjava_jc_spring.common.views.View;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,11 +18,11 @@ import java.util.List;
 @RequestMapping(UserController.REST_URL)
 @RequiredArgsConstructor
 public class UserController extends AbstractRestController {
-    public static final String REST_URL = BASE_REST_URL + "/user";
+    public static final String REST_URL = AbstractRestController.BASE_REST_URL + "/jsonView/users";
 
     private final UserService userService;
 
-    @GetMapping("/list")
+    @GetMapping
     @JsonView(View.UserSummary.class)
     public List<User> usersList() {
         return userService.getAll();
@@ -38,19 +38,19 @@ public class UserController extends AbstractRestController {
         return user;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void create(@RequestBody @Validated({Default.class, View.CreateEntity.class}) User user) {
         userService.save(user);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Validated({Default.class, View.UpdateEntity.class}) User user) {
         userService.update(user.getId(), user);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable(name = "id") Long id) {
         userService.deleteById(id);

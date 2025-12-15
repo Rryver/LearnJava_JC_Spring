@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.kolosov.learnjava_jc_spring.common.BaseEntity;
 import com.kolosov.learnjava_jc_spring.common.views.View;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -21,7 +22,7 @@ import org.hibernate.validator.constraints.Length;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "json_view_user")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -44,6 +45,7 @@ public class User extends BaseEntity<Long> {
     @JsonView(View.UserDetails.class)
     @JsonIgnoreProperties("user")
     @Null(groups = { View.CreateEntity.class, View.UpdateEntity.class })
+    @Schema(hidden = true)
     private List<Order> orders;
 
     public User(Long id, String name, String email) {

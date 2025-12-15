@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Alexandr Kolosov
       changes:
         - insert:
-            tableName: order_product
+            tableName: json_view_order_product
             columns:
               - column:
                   name: order_id
@@ -19,7 +19,7 @@ databaseChangeLog:
                   name: count
                   value: 1
         - insert:
-            tableName: order_product
+            tableName: json_view_order_product
             columns:
               - column:
                   name: order_id

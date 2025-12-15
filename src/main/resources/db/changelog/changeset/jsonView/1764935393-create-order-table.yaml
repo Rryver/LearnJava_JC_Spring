@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Alexandr Kolosov
       changes:
         - createTable:
-            tableName: order
+            tableName: json_view_order
             columns:
               - column:
                   name: id
@@ -24,9 +24,9 @@ databaseChangeLog:
                   type: NUMERIC
         - addForeignKeyConstraint:
             constraintName: FK-order-user
-            baseTableName: order
+            baseTableName: json_view_order
             baseColumnNames: user_id
-            referencedTableName: user
+            referencedTableName: json_view_user
             referencedColumnNames: id
             onDelete: CASCADE
             onUpdate: CASCADE

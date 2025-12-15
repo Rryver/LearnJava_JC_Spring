@@ -1,6 +1,7 @@
 package com.kolosov.learnjava_jc_spring.jsonView.services;
 
 import com.kolosov.learnjava_jc_spring.common.CrudService;
+import com.kolosov.learnjava_jc_spring.common.errors.exceptions.ResourceNotFoundException;
 import com.kolosov.learnjava_jc_spring.jsonView.models.Order;
 import com.kolosov.learnjava_jc_spring.jsonView.models.OrderProduct;
 import com.kolosov.learnjava_jc_spring.jsonView.repositories.OrderProductRepository;
@@ -26,6 +27,9 @@ public class OrderService extends CrudService<Order, Long> {
 
     @Transactional
     public List<Order> getAll(Long userId) {
+        if (!userService.existById(userId)) {
+            throw new ResourceNotFoundException(String.format("User with id %d does not exist", userId));
+        }
         List<Order> allByUserId = orderRepository.findAllByUserId(userId);
         return allByUserId;
     }

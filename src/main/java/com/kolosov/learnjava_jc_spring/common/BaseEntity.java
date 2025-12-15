@@ -1,6 +1,7 @@
 package com.kolosov.learnjava_jc_spring.common;
 
 import com.kolosov.learnjava_jc_spring.common.views.View;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;

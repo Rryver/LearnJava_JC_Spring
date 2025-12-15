@@ -11,17 +11,18 @@ import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping(OrderControllerOm.REST_URL)
+@RequestMapping(value = OrderControllerOm.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class OrderControllerOm extends AbstractRestController {
 
-    public static final String REST_URL = AbstractRestController.BASE_REST_URL + "/objectMapper/order";
+    public static final String REST_URL = AbstractRestController.BASE_REST_URL + "/objectMapper/orders";
 
     private final OrderServiceOm orderService;
     private final JsonHelper jsonHelper;
@@ -53,9 +54,9 @@ public class OrderControllerOm extends AbstractRestController {
 
     @PutMapping("/{id}")
     public void update(@PathVariable(name = "id") Long id, @RequestBody String requestBody) {
-        OrderOm order = jsonHelper.readValue(requestBody, OrderOm.class);
+        OrderForm order = jsonHelper.readValue(requestBody, OrderForm.class);
 
-        Set<ConstraintViolation<OrderOm>> errors = validator.validate(order, Default.class, View.CreateEntity.class);
+        Set<ConstraintViolation<OrderForm>> errors = validator.validate(order, Default.class, View.UpdateEntity.class);
         if (!errors.isEmpty()) {
             throw new ValidationException("Ошибка: " + errors);
         }

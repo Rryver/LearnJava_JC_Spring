@@ -38,4 +38,5 @@ public class ProductOm extends BaseEntity<Long> {
     @NotNull
     @Min(0)
     private Integer quantityStock;
+
 }

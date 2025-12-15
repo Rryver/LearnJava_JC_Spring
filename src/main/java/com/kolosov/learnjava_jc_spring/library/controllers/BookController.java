@@ -4,8 +4,10 @@ import com.kolosov.learnjava_jc_spring.common.AbstractRestController;
 import com.kolosov.learnjava_jc_spring.common.views.View;
 import com.kolosov.learnjava_jc_spring.library.models.Book;
 import com.kolosov.learnjava_jc_spring.library.services.BookService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -17,12 +19,13 @@ import java.util.List;
 @RequestMapping(BookController.REST_URL)
 @RequiredArgsConstructor
 public class BookController extends AbstractRestController {
-    public static final String REST_URL = AbstractRestController.BASE_REST_URL + "/books";
+    public static final String REST_URL = AbstractRestController.BASE_REST_URL + "/library/books";
 
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> list(Pageable pageable) {
+    @Schema()
+    public List<Book> list(@ParameterObject Pageable pageable) {
         return bookService.getAll(pageable);
     }
 

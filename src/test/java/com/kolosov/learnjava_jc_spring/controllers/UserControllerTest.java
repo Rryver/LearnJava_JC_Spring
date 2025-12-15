@@ -22,11 +22,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerTest extends AbstractControllerTests {
-    private static final String REST_URL_USERS_LIST = UserController.REST_URL + "/list";
+    private static final String REST_URL_USERS_LIST = UserController.REST_URL;
     private static final String REST_URL_USER_BY_ID = UserController.REST_URL + "/";
-    private static final String REST_URL_CREATE_USER = UserController.REST_URL + "/create";
-    private static final String REST_URL_UPDATE_USER = UserController.REST_URL + "/update";
-    private static final String REST_URL_DELETE_USER = UserController.REST_URL + "/delete";
+    private static final String REST_URL_CREATE_USER = UserController.REST_URL;
+    private static final String REST_URL_UPDATE_USER = UserController.REST_URL;
+    private static final String REST_URL_DELETE_USER = UserController.REST_URL;
 
     @MockitoBean
     UserService userService;

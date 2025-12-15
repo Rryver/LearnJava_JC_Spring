@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.kolosov.learnjava_jc_spring.common.BaseEntity;
 import com.kolosov.learnjava_jc_spring.common.views.View;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +14,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "json_view_order")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -25,9 +27,10 @@ public class Order extends BaseEntity<Long> {
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties("orders")
+    @NotNull
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("order")
     private List<OrderProduct> products;
 
@@ -36,6 +39,7 @@ public class Order extends BaseEntity<Long> {
     private OrderStatus status;
 
     @Column(name = "total_amount", columnDefinition = "NUMERIC")
+    @Schema(hidden = true)
     private Double totalAmount = 0.0;
 
     public Order(Long id, User user, OrderStatus status) {

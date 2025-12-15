@@ -13,7 +13,11 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Override
-    @EntityGraph(attributePaths = {"products"}, type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = {"products", "user"})
+    List<Order> findAll();
+
+    @Override
+    @EntityGraph(attributePaths = {"products"})
     Optional<Order> findById(Long aLong);
 
     @Query("select o " +
