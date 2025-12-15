@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: SpringMvc
+      POSTGRES_DB: SpringData
     ports:
       - "5439:5432"
     expose:
