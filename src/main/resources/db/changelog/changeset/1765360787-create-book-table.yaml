@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1765360787-create-book-table
+      author: Alexandr Kolosov
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(64)
+              - column:
+                  name: author
+                  type: VARCHAR(64)
+              - column:
+                  name: publication_year
+                  type: INT

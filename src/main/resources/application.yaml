@@ -4,13 +4,13 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5439/TestBlank
+    url: jdbc:postgresql://localhost:5439/SpringDataJdbc
     username: postgres
     password: root
 
   liquibase:
     enabled: true
-#    drop-first: true
+    drop-first: true
 
   jpa:
     hibernate:
