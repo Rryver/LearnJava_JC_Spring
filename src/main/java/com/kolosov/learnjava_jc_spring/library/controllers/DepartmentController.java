@@ -5,11 +5,9 @@ import com.kolosov.learnjava_jc_spring.common.views.View;
 import com.kolosov.learnjava_jc_spring.library.models.Department;
 import com.kolosov.learnjava_jc_spring.library.models.Employee;
 import com.kolosov.learnjava_jc_spring.library.projections.EmployeeProjection;
-import com.kolosov.learnjava_jc_spring.library.services.EmployeeService;
+import com.kolosov.learnjava_jc_spring.library.services.DepartmentService;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,40 +15,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(EmployeeController.REST_URL)
+@RequestMapping(DepartmentController.REST_URL)
 @RequiredArgsConstructor
-public class EmployeeController extends AbstractRestController {
-    public static final String REST_URL = AbstractRestController.BASE_REST_URL + "/employees";
+public class DepartmentController extends AbstractRestController {
+    public static final String REST_URL = AbstractRestController.BASE_REST_URL + "/departments";
 
-    private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
 
     @GetMapping
-    public List<EmployeeProjection> list() {
-        return employeeService.getAllAsProjections();
-    }
-
-    @GetMapping("/{id}")
-    public Employee getById(@PathVariable(name = "id") Long id) {
-        return employeeService.getById(id);
+    public List<Department> list() {
+        return departmentService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void create(@RequestBody @Validated({Default.class, View.CreateEntity.class}) Employee employee) {
-        employeeService.save(employee);
+    public void create(@RequestBody @Validated({Default.class, View.CreateEntity.class}) Department department) {
+        departmentService.save(department);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable(name = "id") Long id,
-                       @RequestBody @Validated({Default.class, View.UpdateEntity.class}) Employee employee
+                       @RequestBody @Validated({Default.class, View.UpdateEntity.class}) Department department
     ) {
-        employeeService.update(id, employee);
+        departmentService.update(id, department);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable(name = "id") Long id) {
-        employeeService.deleteById(id);
+        departmentService.deleteById(id);
     }
 }

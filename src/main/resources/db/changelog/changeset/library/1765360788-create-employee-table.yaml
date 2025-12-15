@@ -31,7 +31,7 @@ databaseChangeLog:
                   type: INT
               - column:
                   name: department_id
-                  value: BIGINT
+                  type: BIGINT
         - addForeignKeyConstraint:
             constraintName: FK-employee-department
             baseTableName: employee

@@ -17,6 +17,6 @@ public class EmployeeService extends CrudService<Employee, Long> {
     }
 
     public List<EmployeeProjection> getAllAsProjections() {
-        return employeeRepository.findAllProjections();
+        return employeeRepository.getAll();
     }
 }
