@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                title = "Шаблон Spring MVC"
+                title = "Spring DATA JDBC"
         )
 )
 public class OpenApiConfig {
