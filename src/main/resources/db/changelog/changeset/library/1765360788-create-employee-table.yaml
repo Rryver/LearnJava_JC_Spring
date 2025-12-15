@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1765360788-create-book-table
+      author: Alexandr Kolosov
+      changes:
+        - createTable:
+            tableName: employee
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: position
+                  type: VARCHAR(256)
+              - column:
+                  name: salary
+                  type: INT
+              - column:
+                  name: department_id
+                  value: BIGINT
+        - addForeignKeyConstraint:
+            constraintName: FK-employee-department
+            baseTableName: employee
+            baseColumnNames: department_id
+            referencedTableName: department
+            referencedColumnNames: id
+            onDelete: SET NULL
+            onUpdate: CASCADE

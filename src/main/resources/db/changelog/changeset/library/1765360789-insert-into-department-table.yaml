@@ -1,24 +1,27 @@
 databaseChangeLog:
   - changeSet:
-      id: 1764936742-insert-into-user-table
+      id: 1765360789-insert-into-author-table
       author: Alexandr Kolosov
       changes:
         - insert:
-            tableName: json_view_order
+            tableName: department
             columns:
               - column:
                   name: id
                   value: 1
               - column:
-                  name: user_id
-                  value: 1
+                  name: name
+                  value: Управление
+        - insert:
+            tableName: department
+            columns:
               - column:
-                  name: status
-                  value: CREATED
+                  name: id
+                  value: 2
               - column:
-                  name: total_amount
-                  value: 10
+                  name: name
+                  value: Продажи
         - sql: #Изменение текущего значения автоинкремента первичного ключа
             dbms: 'postgresql'
             stripComments: true
-            sql: select setval('json_view_order_id_seq', (select max(id)+1 from public.json_view_order), false)
+            sql: select setval('department_id_seq', (select max(id)+1 from public.department), false)

@@ -4,6 +4,6 @@ databaseChangeLog:
       author: Alexandr Kolosov
       changes:
         - loadData:
-            file: db/changelog/changeset/library/books.csv
+            file: db/changelog/changeset/library/employees.csv
             tableName: library_book
             separator: ;

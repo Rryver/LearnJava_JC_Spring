@@ -12,26 +12,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "library_book")
-public class Book extends BaseEntity<Long> {
+@Table(name = "department")
+public class Department extends BaseEntity<Long> {
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "name")
     @NotBlank
-    @Size(min = 1, max = 64)
-    private String title;
+    private String name;
 
-    @Column(name = "pages_count")
-    @Min(0)
-    private Integer pagesCount;
-
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id")
-    @JsonIgnoreProperties("books")
-    @Valid
-    @NotNull
-    private Author author;
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employees;
 }
