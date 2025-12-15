@@ -26,5 +26,6 @@ public class Department extends BaseEntity<Long> {
     private String name;
 
     @OneToMany(mappedBy = "department")
+    @JsonIgnoreProperties("department")
     private List<Employee> employees;
 }

@@ -3,8 +3,6 @@ package com.kolosov.learnjava_jc_spring.library.controllers;
 import com.kolosov.learnjava_jc_spring.common.AbstractRestController;
 import com.kolosov.learnjava_jc_spring.common.views.View;
 import com.kolosov.learnjava_jc_spring.library.models.Department;
-import com.kolosov.learnjava_jc_spring.library.models.Employee;
-import com.kolosov.learnjava_jc_spring.library.projections.EmployeeProjection;
 import com.kolosov.learnjava_jc_spring.library.services.DepartmentService;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;

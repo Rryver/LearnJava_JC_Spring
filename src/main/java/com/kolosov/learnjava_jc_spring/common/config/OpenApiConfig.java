@@ -10,32 +10,8 @@ import org.springframework.core.annotation.Order;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                title = "Шаблон Spring MVC"
+                title = "Spring DATA - Projections"
         )
 )
 public class OpenApiConfig {
-
-    @Bean
-    public GroupedOpenApi jsonView() {
-        return GroupedOpenApi.builder()
-                .group("JsonView")
-                .pathsToMatch("/api/jsonView/**")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi library() {
-        return GroupedOpenApi.builder()
-                .group("Library")
-                .pathsToMatch("/api/library/**")
-                .build();
-    }
-
-    @Bean
-    public GroupedOpenApi objectmapper() {
-        return GroupedOpenApi.builder()
-                .group("Object Mapper")
-                .pathsToMatch("/api/objectMapper/**")
-                .build();
-    }
 }
