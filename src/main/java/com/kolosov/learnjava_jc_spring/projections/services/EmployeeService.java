@@ -1,9 +1,9 @@
-package com.kolosov.learnjava_jc_spring.library.services;
+package com.kolosov.learnjava_jc_spring.projections.services;
 
 import com.kolosov.learnjava_jc_spring.common.CrudService;
-import com.kolosov.learnjava_jc_spring.library.models.Employee;
-import com.kolosov.learnjava_jc_spring.library.projections.EmployeeProjection;
-import com.kolosov.learnjava_jc_spring.library.repositories.EmployeeRepository;
+import com.kolosov.learnjava_jc_spring.projections.models.Employee;
+import com.kolosov.learnjava_jc_spring.projections.projections.EmployeeProjection;
+import com.kolosov.learnjava_jc_spring.projections.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

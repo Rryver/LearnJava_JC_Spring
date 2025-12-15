@@ -1,4 +1,4 @@
-package com.kolosov.learnjava_jc_spring.library.projections;
+package com.kolosov.learnjava_jc_spring.projections.projections;
 
 import org.springframework.beans.factory.annotation.Value;
 

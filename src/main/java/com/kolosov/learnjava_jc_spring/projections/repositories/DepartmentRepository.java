@@ -1,6 +1,6 @@
-package com.kolosov.learnjava_jc_spring.library.repositories;
+package com.kolosov.learnjava_jc_spring.projections.repositories;
 
-import com.kolosov.learnjava_jc_spring.library.models.Department;
+import com.kolosov.learnjava_jc_spring.projections.models.Department;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 

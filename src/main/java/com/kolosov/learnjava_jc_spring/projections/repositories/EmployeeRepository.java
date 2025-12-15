@@ -1,7 +1,7 @@
-package com.kolosov.learnjava_jc_spring.library.repositories;
+package com.kolosov.learnjava_jc_spring.projections.repositories;
 
-import com.kolosov.learnjava_jc_spring.library.models.Employee;
-import com.kolosov.learnjava_jc_spring.library.projections.EmployeeProjection;
+import com.kolosov.learnjava_jc_spring.projections.models.Employee;
+import com.kolosov.learnjava_jc_spring.projections.projections.EmployeeProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

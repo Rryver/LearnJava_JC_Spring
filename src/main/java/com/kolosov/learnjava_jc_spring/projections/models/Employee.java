@@ -1,4 +1,4 @@
-package com.kolosov.learnjava_jc_spring.library.models;
+package com.kolosov.learnjava_jc_spring.projections.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.kolosov.learnjava_jc_spring.common.BaseEntity;

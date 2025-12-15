@@ -1,8 +1,8 @@
-package com.kolosov.learnjava_jc_spring.library.services;
+package com.kolosov.learnjava_jc_spring.projections.services;
 
 import com.kolosov.learnjava_jc_spring.common.CrudService;
-import com.kolosov.learnjava_jc_spring.library.models.Department;
-import com.kolosov.learnjava_jc_spring.library.repositories.DepartmentRepository;
+import com.kolosov.learnjava_jc_spring.projections.models.Department;
+import com.kolosov.learnjava_jc_spring.projections.repositories.DepartmentRepository;
 import org.springframework.stereotype.Service;
 
 @Service

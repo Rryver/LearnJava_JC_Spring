@@ -1,9 +1,9 @@
-package com.kolosov.learnjava_jc_spring.library.controllers;
+package com.kolosov.learnjava_jc_spring.projections.controllers;
 
 import com.kolosov.learnjava_jc_spring.common.AbstractRestController;
 import com.kolosov.learnjava_jc_spring.common.views.View;
-import com.kolosov.learnjava_jc_spring.library.models.Department;
-import com.kolosov.learnjava_jc_spring.library.services.DepartmentService;
+import com.kolosov.learnjava_jc_spring.projections.models.Department;
+import com.kolosov.learnjava_jc_spring.projections.services.DepartmentService;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

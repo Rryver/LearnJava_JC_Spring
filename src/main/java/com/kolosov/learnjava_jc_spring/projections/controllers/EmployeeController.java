@@ -1,15 +1,12 @@
-package com.kolosov.learnjava_jc_spring.library.controllers;
+package com.kolosov.learnjava_jc_spring.projections.controllers;
 
 import com.kolosov.learnjava_jc_spring.common.AbstractRestController;
 import com.kolosov.learnjava_jc_spring.common.views.View;
-import com.kolosov.learnjava_jc_spring.library.models.Department;
-import com.kolosov.learnjava_jc_spring.library.models.Employee;
-import com.kolosov.learnjava_jc_spring.library.projections.EmployeeProjection;
-import com.kolosov.learnjava_jc_spring.library.services.EmployeeService;
+import com.kolosov.learnjava_jc_spring.projections.models.Employee;
+import com.kolosov.learnjava_jc_spring.projections.projections.EmployeeProjection;
+import com.kolosov.learnjava_jc_spring.projections.services.EmployeeService;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
