@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1764936742-insert-into-user-table
+      author: Alexandr Kolosov
+      changes:
+        - insert:
+            tableName: order
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: status
+                  value: CREATED
+              - column:
+                  name: total_amount
+                  value: 10
+        - sql: #Изменение текущего значения автоинкремента первичного ключа
+            dbms: 'postgresql'
+            stripComments: true
+            sql: select setval('order_id_seq', (select max(id)+1 from public.order), false)

@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1764935393-create-order-table
+      author: Alexandr Kolosov
+      changes:
+        - createTable:
+            tableName: order
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: status
+                  type: VARCHAR(64)
+              - column:
+                  name: total_amount
+                  type: NUMERIC
+        - addForeignKeyConstraint:
+            constraintName: FK-order-user
+            baseTableName: order
+            baseColumnNames: user_id
+            referencedTableName: user
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE

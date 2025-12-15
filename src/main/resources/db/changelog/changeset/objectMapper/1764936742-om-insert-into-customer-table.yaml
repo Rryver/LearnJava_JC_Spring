@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1764936742-om-insert-into-user-table
+      author: Alexandr Kolosov
+      changes:
+        - insert:
+            tableName: object_mapper_customer
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: first_name
+                  value: name1
+              - column:
+                  name: last_name
+                  value: lastName1
+              - column:
+                  name: email
+                  value: customer1@example.com
+              - column:
+                  name: contact_number
+                  value: 89211231122
+        - sql: #Изменение текущего значения автоинкремента первичного ключа
+            dbms: 'postgresql'
+            stripComments: true
+            sql: select setval('object_mapper_customer_id_seq', (select max(id)+1 from public.object_mapper_customer), false)

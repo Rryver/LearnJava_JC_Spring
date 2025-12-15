@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1765360787-create-author-table
+      author: Alexandr Kolosov
+      changes:
+        - createTable:
+            tableName: library_author
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(64)
+
+              - column:
+                  name: surname
+                  type: VARCHAR(64)

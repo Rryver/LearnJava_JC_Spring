@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1764936742-om-insert-into-product-table
+      author: Alexandr Kolosov
+      changes:
+        - insert:
+            tableName: object_mapper_product
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: name
+                  value: Ручка
+              - column:
+                  name: description
+                  value: Описание ручки
+              - column:
+                  name: price
+                  value: 2.2
+              - column:
+                  name: quantity_stock
+                  value: 5
+        - insert:
+            tableName: object_mapper_product
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: name
+                  value: Карандаш
+              - column:
+                  name: description
+                  value: Описание карандаша
+              - column:
+                  name: price
+                  value: 1
+              - column:
+                  name: quantity_stock
+                  value: 10
+        - sql: #Изменение текущего значения автоинкремента первичного ключа
+            dbms: 'postgresql'
+            stripComments: true
+            sql: select setval('object_mapper_product_id_seq', (select max(id)+1 from public.object_mapper_product), false)

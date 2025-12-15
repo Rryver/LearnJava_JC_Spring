@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1765360790-insert-into-book-table
+      author: Alexandr Kolosov
+      changes:
+        - loadData:
+            file: db/changelog/changeset/library/books.csv
+            tableName: library_book
+            separator: ;

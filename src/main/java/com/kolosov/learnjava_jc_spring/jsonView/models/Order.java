@@ -1,0 +1,54 @@
+package com.kolosov.learnjava_jc_spring.jsonView.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.kolosov.learnjava_jc_spring.common.BaseEntity;
+import com.kolosov.learnjava_jc_spring.common.views.View;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Entity
+@Table(name = "order")
+@NoArgsConstructor
+@Getter
+@Setter
+@JsonView(View.BasicView.class)
+public class Order extends BaseEntity<Long> {
+
+    @Column(name = "user_id", insertable = false, updatable = false, nullable = false)
+    private Long userId;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("orders")
+    private User user;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("order")
+    private List<OrderProduct> products;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    @Column(name = "total_amount", columnDefinition = "NUMERIC")
+    private Double totalAmount = 0.0;
+
+    public Order(Long id, User user, OrderStatus status) {
+        super(id);
+        this.user = user;
+        this.status = status;
+    }
+
+    public void setProducts(List<OrderProduct> products) {
+        this.products = products;
+        this.totalAmount = this.products.stream()
+                .map((product) -> product.getPrice() * product.getCount())
+                .reduce(Double::sum)
+                .orElse(null);
+    }
+}

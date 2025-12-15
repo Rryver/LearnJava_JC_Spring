@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1764935738-create-order-product-table
+      author: Alexandr Kolosov
+      changes:
+        - createTable:
+            tableName: order_product
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: BIGINT
+              - column:
+                  name: product_name
+                  type: VARCHAR(64)
+              - column:
+                  name: price
+                  type: NUMERIC
+              - column:
+                  name: count
+                  type: INT
+        - addForeignKeyConstraint:
+            constraintName: FK-order_product-order
+            baseTableName: order_product
+            baseColumnNames: order_id
+            referencedTableName: order
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE

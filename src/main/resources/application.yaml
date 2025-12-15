@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: LearnJava_JC
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5439/TestBlank
+    username: postgres
+    password: root
+
+  liquibase:
+    enabled: true
+#    drop-first: true
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: public
+
+springdoc:
+  swagger-ui:
+    path: /doc
+
+#logging:
+#  level:
+#    sql: debug
+#    web: debug
+#    root: debug
