@@ -4,8 +4,9 @@ import com.kolosov.learnjava_jc_spring.library.models.Employee;
 import com.kolosov.learnjava_jc_spring.library.projections.EmployeeProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-
-    EmployeeProjection findAllAsProjection();
+    List<EmployeeProjection> findAllProjections();
 }

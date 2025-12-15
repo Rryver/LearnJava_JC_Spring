@@ -4,6 +4,7 @@ import com.kolosov.learnjava_jc_spring.common.AbstractRestController;
 import com.kolosov.learnjava_jc_spring.common.views.View;
 import com.kolosov.learnjava_jc_spring.library.models.Department;
 import com.kolosov.learnjava_jc_spring.library.models.Employee;
+import com.kolosov.learnjava_jc_spring.library.projections.EmployeeProjection;
 import com.kolosov.learnjava_jc_spring.library.services.EmployeeService;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class EmployeeController extends AbstractRestController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> list() {
-        return employeeService.getAll();
+    public List<EmployeeProjection> list() {
+        return employeeService.getAllAsProjections();
     }
 
     @GetMapping("/{id}")
