@@ -1,9 +1,9 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/changeset/library/1765360787-create-department-table.yaml
+      file: db/changelog/changeset/projections/1765360787-create-department-table.yaml
   - include:
-      file: db/changelog/changeset/library/1765360788-create-employee-table.yaml
+      file: db/changelog/changeset/projections/1765360788-create-employee-table.yaml
   - include:
-      file: db/changelog/changeset/library/1765360789-insert-into-department-table.yaml
+      file: db/changelog/changeset/projections/1765360789-insert-into-department-table.yaml
   - include:
-      file: db/changelog/changeset/library/1765360790-insert-into-employee-table.yaml
+      file: db/changelog/changeset/projections/1765360790-insert-into-employee-table.yaml
