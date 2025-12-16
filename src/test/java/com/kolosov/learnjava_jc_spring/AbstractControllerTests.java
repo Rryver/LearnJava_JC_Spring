@@ -1,6 +1,6 @@
 package com.kolosov.learnjava_jc_spring;
 
-import com.kolosov.learnjava_jc_spring.common.components.JsonHelper;
+import com.kolosov.learnjava_jc_spring.components.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;

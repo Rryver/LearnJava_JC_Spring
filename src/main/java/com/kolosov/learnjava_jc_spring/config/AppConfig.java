@@ -1,4 +1,4 @@
-package com.kolosov.learnjava_jc_spring.common.config;
+package com.kolosov.learnjava_jc_spring.config;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
