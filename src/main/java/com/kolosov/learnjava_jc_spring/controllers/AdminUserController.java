@@ -4,7 +4,6 @@ import com.kolosov.learnjava_jc_spring.models.User;
 import com.kolosov.learnjava_jc_spring.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

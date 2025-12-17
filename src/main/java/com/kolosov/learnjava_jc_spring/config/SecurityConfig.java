@@ -33,17 +33,16 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final FilterChainExceptionHandler filterChainExceptionHandler;
     private final LoggingFilter loggingFilter;
-//    private final LoggingFilter loggingFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // Перенаправление HTTP на HTTPS
         return http
-                .redirectToHttps(Customizer.withDefaults())
                 .authorizeHttpRequests(c -> c
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/**").authenticated()
                 )
+                .redirectToHttps(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

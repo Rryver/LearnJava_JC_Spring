@@ -33,6 +33,21 @@ databaseChangeLog:
               - column:
                   name: role
                   value: SUPER_ADMIN
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  value: 3
+              - column:
+                  name: email
+                  value: moderator@example.ru
+              - column:
+                  name: password
+                  value: moderator
+              - column:
+                  name: role
+                  value: MODERATOR
         - sql: #Изменение текущего значения автоинкремента первичного ключа
             dbms: 'postgresql'
             stripComments: true
