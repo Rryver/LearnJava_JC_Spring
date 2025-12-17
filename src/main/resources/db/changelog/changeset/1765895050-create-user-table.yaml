@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1765895050-create-user-table
+      author: Alexandr Kolosov
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(256)
+                  constraints:
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(512)
+              - column:
+                  name: role
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_account_non_locked
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false

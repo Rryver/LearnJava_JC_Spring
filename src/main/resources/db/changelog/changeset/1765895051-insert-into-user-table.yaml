@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1765895051-insert-into-user-table
+      author: Alexandr Kolosov
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: email
+                  value: user@example.ru
+              - column:
+                  name: password
+                  value: user
+              - column:
+                  name: role
+                  value: USER
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: email
+                  value: admin@example.ru
+              - column:
+                  name: password
+                  value: admin
+              - column:
+                  name: role
+                  value: SUPER_ADMIN

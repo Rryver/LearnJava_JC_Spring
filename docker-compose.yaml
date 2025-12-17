@@ -1,0 +1,19 @@
+name: itk_spring_kolosov_alexandr
+services:
+  service-db:
+    container_name: postgres-container
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: SpringSecurityJwt
+    ports:
+      - "5439:5432"
+    expose:
+      - "5439"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
