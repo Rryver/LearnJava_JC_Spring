@@ -12,10 +12,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FailedLoginAttempt extends BaseEntity<Long> {
+public class FailedLoginAttempt {
+    @Id
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
-    @OneToOne
-    @JoinColumn(name="user_id", unique=true, nullable=false, updatable=false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "user_id")
     @JsonIgnoreProperties("failedLoginAttempt")
     private User user;
 

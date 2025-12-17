@@ -13,7 +13,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 
-@Component
+//@Component
 public class BasicAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private final HandlerExceptionResolver exceptionResolver;
@@ -30,7 +30,6 @@ public class BasicAuthenticationEntryPoint implements AuthenticationEntryPoint {
         Authentication authentication = authException.getAuthenticationRequest();
         if (!authentication.isAuthenticated()) {
             String principal = (String) authentication.getPrincipal();
-            userService.unsuccessfullAutorize(principal);
         }
         exceptionResolver.resolveException(request, response, null, authException);
     }

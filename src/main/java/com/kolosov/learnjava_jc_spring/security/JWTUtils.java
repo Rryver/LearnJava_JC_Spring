@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +18,15 @@ import java.util.Date;
 import java.util.function.Function;
 
 @Component
+@Slf4j
 public class JWTUtils {
 
     // Ключ шифрования для JWT
     private SecretKey secretKey;
 
     // Время действия токена в миллисекундах (24 часа)
-//    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
-    private static final long EXPIRATION_TIME = 10000;
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
+//    private static final long EXPIRATION_TIME = 10000;
 
     public JWTUtils() {
         // Строка, используемая для создания секретного ключа
@@ -46,6 +48,7 @@ public class JWTUtils {
                 .signWith(secretKey)
                 .compact();
 
+        log.info(String.format("Token generated for username: %s", userDetails.getUsername()));
         return new TokenResponse(token, expiredAtDate.toInstant().getEpochSecond());
     }
 

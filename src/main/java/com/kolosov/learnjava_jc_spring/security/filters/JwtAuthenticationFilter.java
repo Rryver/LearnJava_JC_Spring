@@ -1,5 +1,6 @@
-package com.kolosov.learnjava_jc_spring.security;
+package com.kolosov.learnjava_jc_spring.security.filters;
 
+import com.kolosov.learnjava_jc_spring.security.JWTUtils;
 import com.kolosov.learnjava_jc_spring.services.AuthUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;

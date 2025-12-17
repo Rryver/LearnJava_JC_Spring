@@ -1,5 +1,6 @@
 package com.kolosov.learnjava_jc_spring.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -32,6 +33,7 @@ public class User extends BaseEntity<Long> {
     private Boolean isAccountNonLocked;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
     private FailedLoginAttempt failedLoginAttempt;
 
     public boolean hasRole(Role role) {

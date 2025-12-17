@@ -7,15 +7,10 @@ databaseChangeLog:
             tableName: failed_login_attempts
             columns:
               - column:
-                  name: id
-                  type: BIGSERIAL
-                  constraints:
-                    nullable: false
-                    unique: true
-              - column:
                   name: user_id
                   type: BIGINT
                   constraints:
+                    primaryKey: true
                     nullable: false
                     unique: true
               - column:
