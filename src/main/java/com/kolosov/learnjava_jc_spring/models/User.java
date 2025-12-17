@@ -31,6 +31,9 @@ public class User extends BaseEntity<Long> {
     @Column(name = "is_account_non_locked")
     private Boolean isAccountNonLocked;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FailedLoginAttempt failedLoginAttempt;
+
     public boolean hasRole(Role role) {
         return this.role.equals(role);
     }

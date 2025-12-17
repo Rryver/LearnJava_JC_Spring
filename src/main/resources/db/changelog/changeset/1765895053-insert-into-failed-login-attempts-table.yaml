@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1765895053-insert-into-failed-login-attempts-table
+      author: Alexandr Kolosov
+      changes:
+        - insert:
+            tableName: failed_login_attempts
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: attempts
+                  value: 0
+        - insert:
+            tableName: failed_login_attempts
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: attempts
+                  value: 0

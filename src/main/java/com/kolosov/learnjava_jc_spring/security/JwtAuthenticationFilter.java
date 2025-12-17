@@ -1,6 +1,7 @@
 package com.kolosov.learnjava_jc_spring.security;
 
 import com.kolosov.learnjava_jc_spring.services.AuthUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,8 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException
-    {
+                                    FilterChain filterChain) throws ServletException, IOException {
         String authHeaders = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         String username = null;

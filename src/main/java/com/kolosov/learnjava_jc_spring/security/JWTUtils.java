@@ -23,7 +23,8 @@ public class JWTUtils {
     private SecretKey secretKey;
 
     // Время действия токена в миллисекундах (24 часа)
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
+//    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24;
+    private static final long EXPIRATION_TIME = 10000;
 
     public JWTUtils() {
         // Строка, используемая для создания секретного ключа

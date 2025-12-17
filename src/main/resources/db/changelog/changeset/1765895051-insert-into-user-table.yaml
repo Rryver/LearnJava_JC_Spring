@@ -7,6 +7,9 @@ databaseChangeLog:
             tableName: user
             columns:
               - column:
+                  name: id
+                  value: 1
+              - column:
                   name: email
                   value: user@example.ru
               - column:
@@ -19,6 +22,9 @@ databaseChangeLog:
             tableName: user
             columns:
               - column:
+                  name: id
+                  value: 2
+              - column:
                   name: email
                   value: admin@example.ru
               - column:
@@ -27,3 +33,7 @@ databaseChangeLog:
               - column:
                   name: role
                   value: SUPER_ADMIN
+        - sql: #Изменение текущего значения автоинкремента первичного ключа
+            dbms: 'postgresql'
+            stripComments: true
+            sql: select setval('user_id_seq', (select max(id)+1 from public.user), false)
