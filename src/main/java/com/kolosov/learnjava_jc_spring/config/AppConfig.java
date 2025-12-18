@@ -6,5 +6,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableAutoConfiguration
 public class AppConfig {
-    public static final int MAX_FAILED_ATTEMPTS = 5;
 }

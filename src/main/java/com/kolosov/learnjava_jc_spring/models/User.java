@@ -1,10 +1,10 @@
 package com.kolosov.learnjava_jc_spring.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,17 +24,14 @@ public class User extends BaseEntity<Long> {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @Column(name = "name")
+    @Size(max = 256)
+    private String name;
+
     @Column(name = "role")
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Column(name = "is_account_non_locked")
-    private Boolean isAccountNonLocked;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("user")
-    private FailedLoginAttempt failedLoginAttempt;
 
     public boolean hasRole(Role role) {
         return this.role.equals(role);

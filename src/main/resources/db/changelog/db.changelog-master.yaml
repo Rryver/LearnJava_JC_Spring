@@ -1,9 +1,3 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changeset/1765895050-create-user-table.yaml
-  - include:
-      file: db/changelog/changeset/1765895051-insert-into-user-table.yaml
-  - include:
-      file: db/changelog/changeset/1765895052-create-failed-login-attempts-table.yaml
-  - include:
-      file: db/changelog/changeset/1765895053-insert-into-failed-login-attempts-table.yaml

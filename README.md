@@ -1,191 +1,144 @@
-# Практическое задание - Spring security - JWT - настройка доступа
+## Практическое задание - Spring Security - oauth2
 
 ---
 
-### План задания: Реализация JWT аутентификации с кастомными ролями
-Цель: Реализовать JWT аутентификацию в Spring Boot приложении с использованием кастомных ролей и прав доступа к определённым эндпоинтам. Также реализовать блокировку аккаунтов после нескольких неудачных попыток входа и логирование событий аутентификации. Обеспечить безопасность передачи данных с помощью HTTPS.
+### 1. Регистрация клиента в провайдере OAuth 2.0
+- Вы должны зарегистрировать своё приложение как клиент в провайдере OAuth 2.0: Google, GitHub, или любой другой провайдер.
+- Получите client_id и client_secret после регистрации.
+- Задача: настроить эти параметры в проекте.
 
-## Шаги задания:
-### 1. Настройка Spring Security
-- Настройте проект Spring Boot с зависимостью на Spring Security и JWT.
-- Настройте SecurityConfig, чтобы приложение поддерживало JWT-аутентификацию.
-- Разрешите доступ к определённым ресурсам (например, /login) без аутентификации.
+### 2. Интеграция Spring Security и OAuth 2.0
+
+```
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-oauth2-client</artifactId>
+</dependency>
+```
    
+#### Настройте SecurityConfigurerAdapter:
+
+- В application.yml добавьте настройки клиента (например, для Google):
+```yaml
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: your-client-id
+            client-secret: your-client-secret
+            scope: profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+```
+
+- Используйте Authorization Code поток для аутентификации.
+- Задача: настроить приложение для работы с OAuth 2.0 авторизацией.
+
+
+### 3. Разделение доступа на роли
+- На основе данных, возвращаемых провайдером (например, GitHub или Google), реализуйте функционал назначения ролей пользователю.
+
+
+- Пример ролей:
+  - USER: имеет доступ к основным ресурсам.
+  - ADMIN: имеет доступ к административным ресурсам.
+
+
+- Задача: настроить доступ к определенным эндпоинтам в зависимости от роли пользователя. Пример:
 ```java
-@Configuration  
-@EnableWebSecurity  
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+   http
+           .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                   .requestMatchers("/", "/login", "/error", "/webjars/**").permitAll() // Разрешаем доступ к этим маршрутам всем
+                   .requestMatchers("/h2-console/*").permitAll()
+                   .requestMatchers("/admin/**").hasRole("ADMIN") // Только для администраторов
+                   .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
+           )
+           .exceptionHandling(exceptionHandling -> exceptionHandling
+                   .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)) // Обработка ошибок аутентификации
+           )
+           .oauth2Login(oauth2Login -> oauth2Login
+                   .loginPage("/") // Указываем страницу для входа
+                   .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+                           .userService(socialAppService))
+                   .defaultSuccessUrl("/user")
+           )
+           .logout(logout -> logout
+                   .logoutUrl("/logout") // URL для выхода
+                   .logoutSuccessHandler(oidcLogoutSuccessHandler()) // Обработчик для логаута
+                   .invalidateHttpSession(true)
+                   .deleteCookies("JSESSIONID")
+           );
+   return http.build();
+}
+```
+
+
+### 4. Получение и отображение профиля пользователя
+- После успешной аутентификации получите данные профиля пользователя из провайдера OAuth 2.0 (имя, email и т.д.).
+- Настройте контроллер, который будет получать эту информацию и передавать её на страницу профиля пользователя.
+```java
+@GetMapping("/user")  
+public String user(@AuthenticationPrincipal OAuth2User principal, Model model) {  
+   model.addAttribute("name", principal.getAttribute("name"));  
+   model.addAttribute("login", principal.getAttribute("login"));  
+   model.addAttribute("id", principal.getAttribute("id"));  
+   model.addAttribute("email", principal.getAttribute("email"));  
+   return "user";  
+}
+```
+
+### 5. Отзыв доступа и выход из системы
+- Реализуйте механизм отзыва доступа:
+- Добавьте функционал выхода из системы и отзыв OAuth-токена.
+- Для Google или других провайдеров это можно сделать через вызов logout URL.
+- Задача: реализовать безопасный выход из системы и отзыв токена.
+
+### 6. Логирование действий пользователя
+- Интегрируйте логирование ключевых действий:
+- Успешная аутентификация.
+- Выход из системы.
+- Отзыв доступа.
+- Используйте стандартное логирование Spring или SLF4J для записи этих действий в журнал.
+- Задача: добавить логирование этих событий.
+
+### 7. Защита эндпоинтов
+- Защитите чувствительные части приложения:
+- Запретите доступ к страницам, таким как админ-панель, для неавторизованных пользователей.
+- Задача: реализовать правильную защиту, чтобы защищённые эндпоинты были доступны только авторизованным пользователям и определённым ролям.
+
+```java
+@Service  
 @AllArgsConstructor  
-public class SecurityConfig {
+public class SocialAppService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-   private final OurUserDetailedService ourUserDetailedService;
-   private JwtAuthenticationFilter jwtAuthenticationFilter;
-   private final LoggingFilter loggingFilter;
-
-   @Bean  
-   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {  
-        // Ваша логика
-        // Использование базовой аутентификации (опционально)  
-        // Перенаправление HTTP на HTTPS
-        return httpSecurity.build();  
-   }
-   
-    @Bean  
-    public AuthenticationProvider authenticationProvider() {  
-        // Установка сервиса для загрузки пользовательских данных  
-        // Установка PasswordEncoder для проверки паролей  
-    }  
-  
-    @Bean  
-    public PasswordEncoder passwordEncoder() {  
-        return new BCryptPasswordEncoder();  
-    }  
-    
-    @Bean  
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {  
-        return authenticationConfiguration.getAuthenticationManager();  
-    }  
-}
-```
-
-### 2. Модель пользователя с ролями
-- Создайте модель User с полями username, password, и role. Роль может быть ENUM значением, например, "USER", "MODERATOR", "SUPER_ADMIN".
-- Добавьте поле isAccountNonLocked, чтобы управлять блокировкой аккаунтов.
-
-### 3. Генерация JWT-токенов
-- Реализуйте сервис для генерации и валидации JWT-токенов.
-- При успешной аутентификации генерируйте JWT, добавляйте информацию о ролях и срок действия токена.
-- Возвращайте JWT в ответе при успешной аутентификации.
-   
-```java
-@Component  
-public class JWTUtils {
-
-   // Ключ шифрования для JWT  
-   private SecretKey secretKey;
-
-   // Время действия токена в миллисекундах (24 часа)  
-   private static final long EXPIRATION_TIME;
-
-   public JWTUtils(){
-      // Строка, используемая для создания секретного ключа
-      String secreteString = // 
-      byte[] keyBytes = //
-   }  
-   
-   /*Метод для генерации JWT токена на основе данных пользователя*/  
-   public String generateToken(UserDetails userDetails){
-
-   }
-
-   // Метод для генерации токена обновления (refresh token) с дополнительными данными  
-   public String generateRefreshToken(HashMap<String, Object> claims, UserDetails userDetails){ 
-       
-   }
-
-   public String extractUsername(String token) {
-       return extractClaims(token, Claims::getSubject);
-   }
-
-   // Метод для извлечения имени пользователя из токена  
-   private <T> T extractClaims(String token, Function<Claims, T> claimsTFunction {  
-   }
-
-   public boolean isTokenValid(String token, UserDetails userDetails) {
-       
-   }
-
-    private boolean isTokenExpired(String token) {  
-        return extractClaims(token, Claims::getExpiration).before(new Date());  
-    }  
-}
-```
-
-### 4. Аутентификация с использованием JWT
-- Настройте фильтр JwtAuthenticationFilter, который будет перехватывать запросы и проверять JWT-токен.
-- Если токен валиден и не истек, добавляйте аутентификацию пользователя в SecurityContext.
-   
-```java
-@Component  
-@AllArgsConstructor  
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
-   private final JWTUtils jwtUtils;
-   private OurUserDetailedService ourUserDetailedService;
-
-   // Метод, выполняемый для каждого HTTP запроса  
-   @Override  
-   protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)  
-   throws ServletException, IOException {
-
-        // Шаг 1: Извлечение заголовка авторизации из запроса  
-
-        // Шаг 2: Проверка наличия заголовка авторизации  
-        
-        // Шаг 3: Извлечение токена из заголовка  
-
-        // Шаг 4: Извлечение имени пользователя из JWT токена
-                
-        // Шаг 5: Проверка валидности токена и аутентификации  
-     
-        // Шаг 6: Создание нового контекста безопасности  
-      
-        // Шаг 7: Передача запроса на дальнейшую обработку в фильтрующий цепочке  
-   }
-}
-```
-
-### 5. Настройка кастомных ролей и доступа к эндпоинтам
-- Создайте несколько кастомных ролей: "USER", "MODERATOR", "SUPER_ADMIN".
-- В контроллерах ограничьте доступ к определённым методам для пользователей с определёнными ролями:
-  - USER — доступ к общим ресурсам (например, просмотр профиля).
-  - MODERATOR — доступ к модерации контента.
-  - SUPER_ADMIN — полный доступ к управлению пользователями.
-- Настройте роли через аннотации @PreAuthorize или @Secured на уровне методов.
-
-### 6. Проверка срока действия JWT и обработка истечения
-- Реализуйте логику проверки срока действия токена.
-- Если срок действия токена истёк, обработайте это событие, отправляя соответствующий HTTP-ответ клиенту (например, 401 Unauthorized).
-
-### 7. Блокировка аккаунтов после неудачных попыток входа
-- Создайте механизм подсчёта неудачных попыток входа.
-- Если количество неудачных попыток входа превышает определённый порог (например, 5 попыток), блокируйте аккаунт, установив поле isAccountNonLocked в false.
-- Реализуйте возможность разблокировки аккаунта администратором.
-
-### 8. Логирование аутентификации
-- Реализуйте логирование попыток входа (успешных и неудачных) и других важных действий (например, блокировка аккаунта, генерация JWT).
-- Логи можно записывать в файл или базу данных для анализа.
-   
-```java
-@Component  
-public class LoggingFilter extends OncePerRequestFilter {
-
-   private static final Logger logger = LoggerFactory.getLogger(LoggingFilter.class);
+   private final UserRepository userRepository;
+   private static final Logger logger = LoggerFactory.getLogger(SocialAppService.class);
 
    @Override  
-   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)  
-   throws ServletException, IOException {
-       // Логирование информации о запросе
-   }  
+   @Transactional 
+   public OAuth2User loadUser(OAuth2UserRequest userRequest) {
+       OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
+       OAuth2User oAuth2User = delegate.loadUser(userRequest);
+       // Логика сохранения юзера, определения роли на основе аутентификации
+       return savedUser;
+   }
 }
 ```
 
-### 9. Использование HTTPS
-- Настройте приложение для работы через HTTPS. Для этого можно использовать самоподписанный сертификат или внешний сертификат.
-- Убедитесь, что все запросы (особенно связанные с аутентификацией и передачей JWT) передаются через защищённое соединение. (Для создания самоподписанного сертификата в Java используется утилита keytool, которая поставляется вместе с JDK)
-
-### 10. **Тестирование
-- Тестируйте приложение с разными пользователями и ролями, проверяя доступ к эндпоинтам.
-- Проверьте истечение токена и процесс блокировки аккаунта после нескольких неудачных попыток входа.
-- Убедитесь, что всё логирование работает корректно.
-
-*примечание: для тестирования не нужно писать тестовые классы, достаточно проверки в Postman.
-
-### Дополнительные требования (опционально):
-- Реализуйте возможность обновления JWT через Refresh Token.
-
+### 8. Обработка ошибок
+- Добавьте обработчики для ошибок:
+- Ошибки аутентификации.
+- Недостаток прав доступа (403 Forbidden).
+- Ошибка истечения токена и другие сценарии.
+- Задача: реализовать контроллер для обработки этих ошибок и выводить корректные сообщения пользователю.
+   
 ---
 
-## *Дополнительные материалы 
-- https://www.youtube.com/watch?v=EjrlN_OQVDQ 
-- https://www.youtube.com/watch?v=mUq9MGe5vZA 
-- https://www.youtube.com/watch?v=oeni_9g7too
+### Дополнительные материалы:
+
+- https://spring.io/guides/tutorials/spring-boot-oauth2
+
+- https://vk.com/video-218833461_456239075

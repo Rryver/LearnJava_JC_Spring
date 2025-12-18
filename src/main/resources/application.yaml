@@ -4,7 +4,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5439/SpringSecurityJwt
+    url: jdbc:postgresql://localhost:5439/SpringSecurityOauth
     username: postgres
     password: root
 
@@ -21,22 +21,18 @@ spring:
       hibernate:
         default_schema: public
 
-springdoc:
-  swagger-ui:
-    path: /doc
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 399787504942-3him3683k21q9ajlmmmaijcdtl9lo8gq.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 
-logging:
-  file:
-    name: logs/app.log
-  level:
+#logging:
+#  level:
 #    root: info
-    web: info
+#    web: info
 #    sql: debug
-
-server:
-  ssl:
-    key-store: classpath:mykeystore.jks
-    key-store-password: qwerty
-    key-password: qwerty
-    key-alias: mykey
-  port: 8443

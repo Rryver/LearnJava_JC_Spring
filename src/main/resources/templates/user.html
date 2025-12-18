@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>User page</title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Profile</h1>
+
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td>ID</td>
+            <td th:text="${id}"></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td th:text="${name}"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td th:text="${email}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div style="margin-top: 10px;">
+        <form th:action="@{/logout}" method="post">
+            <button class="btn btn-primary btn-lg mt-3" type="submit">Logout</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

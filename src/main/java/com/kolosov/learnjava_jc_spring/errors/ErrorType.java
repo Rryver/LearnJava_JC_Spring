@@ -8,7 +8,6 @@ public enum ErrorType {
     NOT_FOUND("Not found", HttpStatus.NOT_FOUND),
     RESOURCE_NOT_FOUND("Resource not found", HttpStatus.NOT_FOUND),
 
-    JWT_EXPIRED("JWT Expired", HttpStatus.UNAUTHORIZED),
     BAD_CREDENTIALS("Username or password are incorrect", HttpStatus.UNAUTHORIZED);
 
     public final String title;

@@ -46,9 +46,4 @@ public class AuthUser extends org.springframework.security.core.userdetails.User
     public String toString() {
         return "AuthUser:" + user.getId() + '[' + user.getEmail() + ']';
     }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return user.getIsAccountNonLocked();
-    }
 }

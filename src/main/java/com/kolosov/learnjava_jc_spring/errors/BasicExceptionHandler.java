@@ -3,7 +3,6 @@ package com.kolosov.learnjava_jc_spring.errors;
 import com.kolosov.learnjava_jc_spring.errors.exceptions.AppException;
 import com.kolosov.learnjava_jc_spring.errors.exceptions.BadRequestException;
 import com.kolosov.learnjava_jc_spring.errors.exceptions.ResourceNotFoundException;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -31,7 +30,6 @@ public class BasicExceptionHandler {
     static final Map<Class<? extends Throwable>, ErrorType> HTTP_STATUS_MAP = new LinkedHashMap<>() {
         {
             put(BadCredentialsException.class, ErrorType.BAD_CREDENTIALS);
-            put(ExpiredJwtException.class, ErrorType.JWT_EXPIRED);
             put(ChangeSetPersister.NotFoundException.class, ErrorType.NOT_FOUND);
             put(NoHandlerFoundException.class, ErrorType.NOT_FOUND);
             put(BadRequestException.class, ErrorType.BAD_REQUEST);
