@@ -17,14 +17,12 @@ public class MainController {
 
     @GetMapping("/")
     public String index(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         boolean isAuthenticated = false;
 
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof CustomOAuth2User oAuth2User) {
+        CustomOAuth2User user = CustomOAuth2User.get();
+        if (user != null) {
             isAuthenticated = true;
-            model.addAttribute("username", oAuth2User.getUsername());
+            model.addAttribute("username", user.getUsername());
         }
 
         model.addAttribute("isAuthenticated", isAuthenticated);
