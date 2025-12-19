@@ -27,6 +27,7 @@ public class SocialAppService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        log.info("User logged in by Oauth2. Start loading user...");
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         OAuth2UserData oAuth2UserData = new OAuth2UserData(oAuth2User, userRequest);
@@ -35,11 +36,13 @@ public class SocialAppService extends DefaultOAuth2UserService {
             throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_TOKEN), "Google account does not contain email or first name");
         }
 
-        String name = extractor.getFirstName(oAuth2UserData);
-
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            user = userRepository.save(new User(email, SOCIAL_PASSWORD, name, Role.USER));
+            log.info(String.format("Got new User. Creating Entity with email %s", email));
+            String name = extractor.getFirstName(oAuth2UserData);
+            Role role = email.length() % 2 == 0 ? Role.USER : Role.ADMIN;
+
+            user = userRepository.save(new User(email, SOCIAL_PASSWORD, name, role));
         }
 
         return new CustomOAuth2User(oAuth2User, user);

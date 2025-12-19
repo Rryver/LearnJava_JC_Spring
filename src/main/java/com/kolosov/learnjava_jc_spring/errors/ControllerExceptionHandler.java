@@ -1,15 +1,10 @@
 package com.kolosov.learnjava_jc_spring.errors;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ProblemDetail;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
-
-import java.util.Map;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 @ControllerAdvice
 @Slf4j
@@ -19,8 +14,8 @@ public class ControllerExceptionHandler extends BasicExceptionHandler {
         super(errorMessageHandler);
     }
 
-    @ExceptionHandler(Throwable.class)
-    public String exception(Exception exception, Model model) {
+    @ExceptionHandler(Exception.class)
+    public ModelAndView exception(Exception exception) {
         log.error(exception.getMessage());
 
         ErrorType errorType = findErrorTypeByExceptionClass(exception.getClass());
@@ -28,11 +23,13 @@ public class ControllerExceptionHandler extends BasicExceptionHandler {
         String errorHttpStatus = errorType.httpStatus.name();
         String errorMessage = exception.getMessage();
 
-        model.addAttribute("errorTitle", errorMessage);
-        model.addAttribute("errorHttpStatus", errorHttpStatus);
-        model.addAttribute("errorMessage", errorMessage);
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("errorTitle", errorMessage);
+        mav.addObject("errorHttpStatus", errorHttpStatus);
+        mav.addObject("errorMessage", errorMessage);
+        mav.setViewName("error");
 
-        return "error";
+        return mav;
     }
 
 //    @ExceptionHandler(BindException.class)

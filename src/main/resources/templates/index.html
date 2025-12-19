@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Demo</title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width"/>
-    <base href="/"/>
+
+    <title>User page</title>
+
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -14,13 +15,20 @@
 <body>
 
 <div class="container">
-    <h1>Demo</h1>
+    <h1>Main page</h1>
 
-    <div class="container authenticated">
-        Logged in as: <span id="user"></span>
+    <div th:if="!${isAuthenticated}">
+        <a href="/oauth2/authorization/google"><button class="btn btn-primary btn-md mt-3" type="submit">Login</button></a>
     </div>
-    <div class="container unauthenticated">
-        <a href="/oauth2/authorization/google"><button>SignIn with Google</button></a>
+    <h5 th:if="${isAuthenticated}">
+        Logged in as: <span id="user" th:text="${username}"></span>
+    </h5>
+
+    <div style="margin-top: 10px;">
+        <a href="/user"><button class="btn btn-primary btn-md mt-3" type="submit">User personal page (only for authenticated)</button></a>
+    </div>
+    <div style="margin-top: 10px;">
+        <a href="/admin"><button class="btn btn-primary btn-md mt-3" type="submit">Admin page (only for admins)</button></a>
     </div>
 
 </div>

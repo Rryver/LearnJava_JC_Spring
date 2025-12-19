@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width"/>
 
-    <title>User page</title>
+    <title>Admin page</title>
 
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
@@ -15,34 +15,14 @@
 <body>
 
 <div class="container">
-    <h1>Profile</h1>
-
-    <table class="table table-striped">
-        <tbody>
-        <tr>
-            <td>ID</td>
-            <td th:text="${id}"></td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td th:text="${name}"></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td th:text="${email}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <h1>Admin page</h1>
 
     <div style="margin-top: 10px;">
         <a href="/"><button class="btn btn-primary btn-md mt-3" type="submit">To main page</button></a>
     </div>
     <div style="margin-top: 10px;">
-        <form th:action="@{/logout}" method="post">
-            <button class="btn btn-primary btn-md mt-3" type="submit">Logout</button>
-        </form>
+        <a href="/user"><button class="btn btn-primary btn-md mt-3" type="submit">User personal page (only for authenticated)</button></a>
     </div>
-
 </div>
 
 </body>

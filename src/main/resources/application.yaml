@@ -31,7 +31,9 @@ spring:
             scope: profile, email
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 
-#logging:
+logging:
+  file:
+    name: logs/app.log
 #  level:
 #    root: info
 #    web: info
