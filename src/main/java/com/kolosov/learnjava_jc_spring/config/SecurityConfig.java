@@ -1,7 +1,5 @@
 package com.kolosov.learnjava_jc_spring.config;
 
-import com.kolosov.learnjava_jc_spring.errors.AuthErrorhandler;
-import com.kolosov.learnjava_jc_spring.errors.FilterChainExceptionHandler;
 import com.kolosov.learnjava_jc_spring.models.User;
 import com.kolosov.learnjava_jc_spring.repositories.UserRepository;
 import com.kolosov.learnjava_jc_spring.security.AuthUser;
@@ -26,8 +24,6 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final SocialAppService socialAppService;
-    private final FilterChainExceptionHandler exceptionHandler;
-    private final AuthErrorhandler authErrorhandler;
     private final CustomLogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
@@ -38,7 +34,6 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-//                .exceptionHandling(c -> c.authenticationEntryPoint(authErrorhandler))
                 .oauth2Login(oauth2Login -> oauth2Login
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(socialAppService))
                         .defaultSuccessUrl("/user")

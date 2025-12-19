@@ -15,7 +15,7 @@ public class ControllerExceptionHandler extends BasicExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView exception(Exception exception) {
+    public String exception(Exception exception) {
         log.error(exception.getMessage());
 
         ErrorType errorType = findErrorTypeByExceptionClass(exception.getClass());
@@ -24,12 +24,11 @@ public class ControllerExceptionHandler extends BasicExceptionHandler {
         String errorMessage = exception.getMessage();
 
         ModelAndView mav = new ModelAndView();
-        mav.addObject("errorTitle", errorMessage);
+        mav.addObject("errorTitle", errorTitle);
         mav.addObject("errorHttpStatus", errorHttpStatus);
         mav.addObject("errorMessage", errorMessage);
-        mav.setViewName("error");
 
-        return mav;
+        return "error";
     }
 
 //    @ExceptionHandler(BindException.class)
